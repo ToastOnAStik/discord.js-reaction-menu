@@ -30,7 +30,7 @@ module.exports = class Menu {
     }
     select(pg = 0) {
         this.page = pg
-        if (this.pages.length > 1 !this.pages[pg].footer.text.includes(' | Page')) {
+        if (this.pages.length > 1 && !this.pages[pg].footer.text.includes(' | Page')) {
             this.pages[pg].footer.text += ` | Page ${pg+1}/${this.pages.length}`
         }
         this.msg.edit("", { embed: this.pages[pg], allowedMentions: { replied_user: false } }).catch(() => {
