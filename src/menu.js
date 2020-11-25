@@ -50,7 +50,7 @@ module.exports = class Menu {
             this.msg.reactions.removeAll().catch(this.catch)
         })
     }
-    if (this.pages.length > 1) {
+    if (pages.length > 1) {
          async addReactions() {
             try {
                 if (this.reactions.first) await this.msg.react(this.reactions.first)
