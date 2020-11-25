@@ -5,7 +5,7 @@ module.exports = class Menu {
     static defaultReactions = { back: '◀️', next: '▶️'}
 
     constructor(opts = {}) {
-        const { channel = new TextChannel, message = new Message, userID, pages = [], page = 0, time = 120000, reactions = Menu.defaultReactions, customCatch = console.error } = opts
+        const { channel = new TextChannel, message = new Message, userID, pages = [], page = 0, time = 300000, reactions = Menu.defaultReactions, customCatch = console.error } = opts
         this.channel = channel
         this.message = message
         this.pages = pages
