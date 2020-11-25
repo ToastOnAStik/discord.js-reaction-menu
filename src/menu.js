@@ -54,11 +54,8 @@ module.exports = class Menu {
     async addReactions() {
         if (this.pages.length > 1) {
             try {
-                if (this.reactions.first) await this.msg.react(this.reactions.first)
                 if (this.reactions.back) await this.msg.react(this.reactions.back)
                 if (this.reactions.next) await this.msg.react(this.reactions.next)
-                if (this.reactions.last) await this.msg.react(this.reactions.last)
-                if (this.reactions.stop) await this.msg.react(this.reactions.stop)
             } catch (e) {
                 this.catch(e)
             }
