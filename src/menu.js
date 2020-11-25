@@ -1,5 +1,4 @@
 const { TextChannel } = require('discord.js')
-const { MessageEmbed } = require('discord.js')
 const { Message } = require('discord.js')
 
 module.exports = class Menu {
@@ -14,12 +13,12 @@ module.exports = class Menu {
         this.reactions = reactions
         this.page = page
         this.catch = customCatch
-        message.reply("", { embed: new (pages[page].setFooter((this.pages.length > 1 ? `${pages[page].footer.text} | Page ${page+1}/${this.pages.length}` : pages[page].footer.text), pages[page].footer.iconURL)), allowedMentions: { replied_user: false } }).then(msg => {
+        message.reply("", { embed: pages[page], allowedMentions: { replied_user: false } }).then(msg => {
             this.msg = msg
             this.addReactions()
             this.createCollector(userID)
         }).catch(() => {
-            message.reply("", { embed: new (pages[page].setThumbnail('').setFooter((this.pages.length > 1 ? `${pages[page].footer.text} | Page ${page+1}/${this.pages.length}` : pages[page].footer.text), pages[page].footer.iconURL)), allowedMentions: { replied_user: false } }).then(msg => {
+            message.reply("", { embed: pages[page].setThumbnail(''), allowedMentions: { replied_user: false } }).then(msg => {
                 this.msg = msg
                 this.addReactions()
                 this.createCollector(userID)
@@ -28,11 +27,8 @@ module.exports = class Menu {
     }
     select(pg = 0) {
         this.page = pg
-        if (this.pages.length > 1) {
-            this.pages[pg].footer.text += ` | Page ${pg+1}/${this.pages.length}`
-        }
-        this.msg.edit("", { embed: new (this.pages[pg].setFooter((this.pages.length > 1 ? `${this.pages[pg].footer.text} | Page ${pg+1}/${this.pages.length}` : this.pages[pg].footer.text)), this.pages[pg].footer.iconURL), allowedMentions: { replied_user: false } }).catch(() => {
-            this.msg.edit("", { embed: new (this.pages[pg].setThumbnail((this.pages.length > 1 ? `${this.pages[pg].footer.text} | Page ${pg+1}/${this.pages.length}` : this.pages[pg].footer.text)), this.pages[pg].footer.iconURL), allowedMentions: { replied_user: false } })
+        this.msg.edit("", { embed: this.pages[pg], allowedMentions: { replied_user: false } }).catch(() => {
+            this.msg.edit("", { embed: this.pages[pg].setThumbnail(''), allowedMentions: { replied_user: false } })
         })
     }
     createCollector(uid) {
