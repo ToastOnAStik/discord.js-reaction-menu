@@ -50,15 +50,17 @@ module.exports = class Menu {
             this.msg.reactions.removeAll().catch(this.catch)
         })
     }
-    async addReactions() {
-        try {
-            if (this.reactions.first) await this.msg.react(this.reactions.first)
-            if (this.reactions.back)  await this.msg.react(this.reactions.back)
-            if (this.reactions.next)  await this.msg.react(this.reactions.next)
-            if (this.reactions.last)  await this.msg.react(this.reactions.last)
-            if (this.reactions.stop)  await this.msg.react(this.reactions.stop)
-        } catch (e) {
-            this.catch(e)
+    if (this.pages.length > 1) {
+         async addReactions() {
+            try {
+                if (this.reactions.first) await this.msg.react(this.reactions.first)
+                if (this.reactions.back)  await this.msg.react(this.reactions.back)
+                if (this.reactions.next)  await this.msg.react(this.reactions.next)
+                if (this.reactions.last)  await this.msg.react(this.reactions.last)
+                if (this.reactions.stop)  await this.msg.react(this.reactions.stop)
+            } catch (e) {
+                this.catch(e)
+            }
         }
     }
 }
