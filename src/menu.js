@@ -17,11 +17,19 @@ module.exports = class Menu {
             this.msg = msg
             this.addReactions()
             this.createCollector(userID)
-        }).catch(customCatch)
+        }).catch(() => {
+           message.reply("", { embed: pages[page].setThumbnail(''), allowedMentions: { replied_user: false } }).then(msg => {
+            this.msg = msg
+            this.addReactions()
+            this.createCollector(userID)
+        })
+       })
     }
     select(pg = 0) {
         this.page = pg
-        this.msg.edit("", { embed: this.pages[pg], allowedMentions: { replied_user: false } }).catch(this.catch)
+        this.msg.edit("", { embed: this.pages[pg], allowedMentions: { replied_user: false } }).catch(() => {
+           this.msg.edit("", { embed: this.pages[pg].setThumbnail(''), allowedMentions: { replied_user: false } })
+        })
     }
     createCollector(uid) {
         const collector = this.msg.createReactionCollector((r, u) => u.id == uid, { time: this.time })
