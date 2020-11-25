@@ -2,7 +2,7 @@ const { TextChannel } = require('discord.js')
 const { Message } = require('discord.js')
 
 module.exports = class Menu {
-    static defaultReactions = { first: '⏪', back: '◀️', next: '▶️', last: '⏩', stop: '⏹' }
+    static defaultReactions = { back: '◀️', next: '▶️'}
 
     constructor(opts = {}) {
         const { channel = new TextChannel, message = new Message, userID, pages = [], page = 0, time = 120000, reactions = Menu.defaultReactions, customCatch = console.error } = opts
@@ -41,15 +41,10 @@ module.exports = class Menu {
         const collector = this.msg.createReactionCollector((r, u) => u.id == uid, { time: this.time })
         this.collector = collector;
         collector.on('collect', r => {
-            if (r.emoji.name == this.reactions.first) {
-                if (this.page != 0) this.select(0)
-            } else if (r.emoji.name == this.reactions.back) {
+            if (r.emoji.name == this.reactions.back) {
                 if (this.page != 0) this.select(this.page - 1)
             } else if (r.emoji.name == this.reactions.next) {
                 if (this.page < this.pages.length - 1) this.select(this.page + 1)
-            } else if (r.emoji.name == this.reactions.last) {
-                if (this.page != this.pages.length) this.select(this.pages.length - 1)
-            } else if (r.emoji.name == this.reactions.stop) collector.stop()
             r.users.remove(uid).catch(this.catch)
         })
         collector.on('end', () => {
