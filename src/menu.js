@@ -13,6 +13,9 @@ module.exports = class Menu {
         this.reactions = reactions
         this.page = page
         this.catch = customCatch
+        if (this.pages.length > 1 && !this.pages[page].footer.text.includes(' | Page')) {
+            this.pages[page].footer.text += ` | Page ${page+1}/${this.pages.length}`
+        }
         message.reply("", { embed: pages[page], allowedMentions: { replied_user: false } }).then(msg => {
             this.msg = msg
             this.addReactions()
