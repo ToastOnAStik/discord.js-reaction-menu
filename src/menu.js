@@ -1,17 +1,19 @@
 const { TextChannel } = require('discord.js')
+const { Message } = require('discord.js')
 
 module.exports = class Menu {
-    static defaultReactions = { first: '⏪', back: '◀', next: '▶', last: '⏩', stop: '⏹' }
+    static defaultReactions = { first: '⏪', back: '⬅️', next: '➡️', last: '⏩', stop: '⏹' }
 
     constructor(opts = {}) {
-        const { channel = new TextChannel, userID, pages = [], page = 0, time = 120000, reactions = Menu.defaultReactions, customCatch = console.error } = opts
+        const { channel = new TextChannel, message = new Message, userID, pages = [], page = 0, time = 120000, reactions = Menu.defaultReactions, customCatch = console.error } = opts
         this.channel = channel
+        this.message = message
         this.pages = pages
         this.time = time
         this.reactions = reactions
         this.page = page
         this.catch = customCatch
-        channel.send(pages[page]).then(msg => {
+        message.reply("", { embed: pages[page], allowedMentions: { replied_user: false } }).then(msg => {
             this.msg = msg
             this.addReactions()
             this.createCollector(userID)
