@@ -45,6 +45,7 @@ module.exports = class Menu {
                 if (this.page != 0) this.select(this.page - 1)
             } else if (r.emoji.name == this.reactions.next) {
                 if (this.page < this.pages.length - 1) this.select(this.page + 1)
+            }
             r.users.remove(uid).catch(this.catch)
         })
         collector.on('end', () => {
