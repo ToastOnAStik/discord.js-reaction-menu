@@ -2,7 +2,7 @@ const { TextChannel } = require('discord.js')
 const { Message } = require('discord.js')
 
 module.exports = class Menu {
-    static defaultReactions = { first: '⏪', back: '⬅️', next: '➡️', last: '⏩', stop: '⏹' }
+    static defaultReactions = { first: '⏪', back: '◀️', next: '▶️', last: '⏩', stop: '⏹' }
 
     constructor(opts = {}) {
         const { channel = new TextChannel, message = new Message, userID, pages = [], page = 0, time = 120000, reactions = Menu.defaultReactions, customCatch = console.error } = opts
