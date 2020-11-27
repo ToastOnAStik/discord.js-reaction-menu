@@ -64,5 +64,10 @@ module.exports = class Menu {
                 this.catch(e)
             }
         }
+        try {
+            if (this.reactions.stop) await this.msg.react(this.reactions.stop)
+        } catch (e) {
+            this.catch(e)
+        }
     }
 }
