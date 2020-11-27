@@ -10,9 +10,11 @@ module.exports = class Menu {
         this.message = message
         this.pages = pages
         this.time = time
+        this.userID = userID
         this.reactions = reactions
         this.page = page
         this.catch = customCatch
+        this.true = true
         if (this.pages.length > 1 && !this.pages[page].footer.text.includes(' - Page')) {
             this.pages[page].footer.text += ` - Page ${page+1}/${this.pages.length}`
         }
@@ -38,15 +40,17 @@ module.exports = class Menu {
         })
     }
     createCollector(uid) {
-        const collector = this.msg.createReactionCollector((r, u) => u.id == uid, { time: this.time })
+        const collector = this.msg.createReactionCollector(this.true, { time: this.time })
         this.collector = collector;
-        collector.on('collect', r => {
-            if (r.emoji.name == this.reactions.back) {
-                if (this.page != 0) this.select(this.page - 1)
-            } else if (r.emoji.name == this.reactions.next) {
-                if (this.page < this.pages.length - 1) this.select(this.page + 1)
+        collector.on('collect', (r, u) => {
+            if (u.id == this.userID) {
+                if (r.emoji.name == this.reactions.back) {
+                    if (this.page != 0) this.select(this.page - 1)
+                } else if (r.emoji.name == this.reactions.next) {
+                    if (this.page < this.pages.length - 1) this.select(this.page + 1)
+                }
             }
-            r.users.remove(uid).catch(this.catch)
+            r.users.remove(u.id).catch(this.catch)
         })
         collector.on('end', () => {
             this.msg.reactions.removeAll().catch(this.catch)
