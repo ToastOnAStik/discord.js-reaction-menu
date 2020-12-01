@@ -16,12 +16,12 @@ module.exports = class Menu {
         if (this.pages.length > 1 && !this.pages[page].footer.text.includes(' - Page')) {
             this.pages[page].footer.text += ` - Page ${page+1}/${this.pages.length}`
         }
-        message.reply("", { embed: pages[page], allowedMentions: { parse: [] } }).then(msg => {
+        message.reply("", { embed: pages[page], allowedMentions: { repliedUser: false } }).then(msg => {
             this.msg = msg
             this.addReactions()
             this.createCollector(userID)
         }).catch(() => {
-            message.reply("", { embed: pages[page].setThumbnail(''), allowedMentions: { parse: [] } }).then(msg => {
+            message.reply("", { embed: pages[page].setThumbnail(''), allowedMentions: { repliedUser: false } }).then(msg => {
                 this.msg = msg
                 this.addReactions()
                 this.createCollector(userID)
@@ -33,8 +33,8 @@ module.exports = class Menu {
         if (this.pages.length > 1 && !this.pages[pg].footer.text.includes(' - Page')) {
             this.pages[pg].footer.text += ` - Page ${pg+1}/${this.pages.length}`
         }
-        this.msg.edit("", { embed: this.pages[pg], allowedMentions: { parse: [] } }).catch(() => {
-            this.msg.edit("", { embed: this.pages[pg].setThumbnail(''), allowedMentions: { parse: [] } })
+        this.msg.edit("", { embed: this.pages[pg], allowedMentions: { repliedUser: false } }).catch(() => {
+            this.msg.edit("", { embed: this.pages[pg].setThumbnail(''), allowedMentions: { repliedUser: false } })
         })
     }
     createCollector(uid) {
