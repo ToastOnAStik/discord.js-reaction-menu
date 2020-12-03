@@ -20,6 +20,7 @@ module.exports = class Menu {
             this.msg = msg
             this.addReactions()
             this.createCollector(userID)
+            this.message.client.saves.set(this.message.id, msg.id)
         }).catch(() => {
             message.reply("", { embed: pages[page].setThumbnail(''), allowedMentions: { repliedUser: false } }).then(msg => {
                 this.msg = msg
