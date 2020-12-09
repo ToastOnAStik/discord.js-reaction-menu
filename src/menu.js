@@ -20,14 +20,14 @@ module.exports = class Menu {
             this.msg = msg
             this.addReactions()
             this.createCollector(userID)
-        }).catch(() => {})
+        })
     }
     select(pg = 0) {
         this.page = pg
         if (this.pages.length > 1 && !this.pages[pg].footer.text.includes(' - Page')) {
             this.pages[pg].footer.text += ` - Page ${pg+1}/${this.pages.length}`
         }
-        this.msg.edit(this.pages[pg]).catch(() => {})
+        this.msg.edit(this.pages[pg])
     }
     createCollector(uid) {
         const collector = this.msg.createReactionCollector((r, u) => u.id == uid, { time: this.time })
