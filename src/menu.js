@@ -16,27 +16,18 @@ module.exports = class Menu {
         if (this.pages.length > 1 && !this.pages[page].footer.text.includes(' - Page')) {
             this.pages[page].footer.text += ` - Page ${page+1}/${this.pages.length}`
         }
-        message.reply("", { embed: pages[page], allowedMentions: { repliedUser: false } }).then(msg => {
+        message.channel.send(pages[page]).then(msg => {
             this.msg = msg
             this.addReactions()
             this.createCollector(userID)
-            this.message.client.saves.set(this.message.id, msg.id)
-        }).catch(() => {
-            message.reply("", { embed: pages[page].setThumbnail(''), allowedMentions: { repliedUser: false } }).then(msg => {
-                this.msg = msg
-                this.addReactions()
-                this.createCollector(userID)
-            })
-        })
+        }).catch(() => {})
     }
     select(pg = 0) {
         this.page = pg
         if (this.pages.length > 1 && !this.pages[pg].footer.text.includes(' - Page')) {
             this.pages[pg].footer.text += ` - Page ${pg+1}/${this.pages.length}`
         }
-        this.msg.edit("", { embed: this.pages[pg], allowedMentions: { repliedUser: false } }).catch(() => {
-            this.msg.edit("", { embed: this.pages[pg].setThumbnail(''), allowedMentions: { repliedUser: false } })
-        })
+        this.msg.edit(this.pages[pg]).catch(() => {})
     }
     createCollector(uid) {
         const collector = this.msg.createReactionCollector((r, u) => u.id == uid, { time: this.time })
