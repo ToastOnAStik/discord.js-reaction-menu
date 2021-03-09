@@ -11,6 +11,9 @@ module.exports = class Menu {
         this.reactions = reactions
         this.page = page
         this.catch = customCatch
+        if (this.pages.length > 1 && !this.pages[page].footer.text.includes('Page')) {
+            this.pages[page].footer.text += `Page ${page+1}/${this.pages.length}`
+        }
         message.util.send(pages[page]).then(msg => {
             this.msg = msg
             this.addReactions()
@@ -19,6 +22,9 @@ module.exports = class Menu {
     }
     select(pg = 0) {
         this.page = pg
+        if (this.pages.length > 1 && !this.pages[pg].footer.text.includes('Page')) {
+            this.pages[pg].footer.text += `Page ${pg+1}/${this.pages.length}`
+        }
         this.msg.edit(this.pages[pg]).catch(this.catch)
     }
     createCollector(uid) {
