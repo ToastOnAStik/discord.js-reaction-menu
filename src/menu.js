@@ -19,7 +19,7 @@ module.exports = class Menu {
     }
     select(pg = 0) {
         this.page = pg
-        this.msg.util.send(this.pages[pg]).catch(this.catch)
+        this.msg.edit(this.pages[pg]).catch(this.catch)
     }
     createCollector(uid) {
         const collector = this.msg.createReactionCollector((r, u) => u.id == uid, { time: this.time })
